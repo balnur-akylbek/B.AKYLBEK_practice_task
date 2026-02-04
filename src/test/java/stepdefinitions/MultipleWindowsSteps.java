@@ -33,7 +33,7 @@ public class MultipleWindowsSteps {
 
         multipleWindowsPage.clickClickHere();
 
-        // switch to new tab
+    
         Set<String> handles = AqualityServices.getBrowser().getDriver().getWindowHandles();
         for (String h : handles) {
             if (!h.equals(original)) {
@@ -55,10 +55,10 @@ public class MultipleWindowsSteps {
         String original = ScenarioContext.getOriginalWindow();
         Assert.assertNotNull(original, "Original window handle is null. It was not saved before opening new tab.");
 
-        // Switch back to original tab first
+
         AqualityServices.getBrowser().getDriver().switchTo().window(original);
 
-        // Now go back (from /windows to main /)
+
         AqualityServices.getBrowser().goBack();
     }
 
