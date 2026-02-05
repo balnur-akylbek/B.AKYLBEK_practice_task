@@ -22,12 +22,7 @@ public class MainPage extends Form {
     }
 
     public void clickMultipleWindows() {
-        // Scroll to element (Aquality will scroll to clickable element in most cases, but we do it explicitly)
         multipleWindowsLink.getJsActions().scrollToTheCenter();
         multipleWindowsLink.click();
-    }
-
-    public boolean isDisplayed() {
-        return state().isDisplayed();
     }
 }
