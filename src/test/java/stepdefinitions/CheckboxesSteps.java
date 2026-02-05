@@ -4,23 +4,17 @@ import io.cucumber.java.en.*;
 import org.testng.Assert;
 import pages.CheckboxesPage;
 import pages.MainPage;
-import aquality.selenium.browser.AqualityServices;
 
 public class CheckboxesSteps {
 
     private final MainPage mainPage = new MainPage();
     private final CheckboxesPage checkboxesPage = new CheckboxesPage();
 
-    @Given("the browser is opened in incognito mode")
-    public void browserOpenedInIncognito() {
-        // handled in Hooks
-    }
-
     @Given("I open the main page")
     public void openMainPage() {
-        AqualityServices.getBrowser()
-                .goTo("https://the-internet.herokuapp.com");
+        Assert.assertTrue(mainPage.state().isDisplayed(), "Main page is not opened");
     }
+
 
     @When("I click on the Checkboxes link")
     public void clickCheckboxesLink() {
@@ -39,12 +33,6 @@ public class CheckboxesSteps {
                 "Checkbox 1 is not selected"
         );
     }
-
-    @When("I refresh the page")
-    public void refreshPage() {
-        AqualityServices.getBrowser().refresh();
-    }
-
     @Then("Checkbox 1 should not be selected")
     public void checkboxShouldNotBeSelected() {
         Assert.assertFalse(

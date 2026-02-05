@@ -28,22 +28,37 @@ public class MultipleWindowsSteps {
 
     @When("I click the Click Here link")
     public void clickClickHere() {
-        String original = AqualityServices.getBrowser().getDriver().getWindowHandle();
+        String original = AqualityServices.getBrowser()
+                .getDriver()
+                .getWindowHandle();
+
         ScenarioContext.setOriginalWindow(original);
 
         multipleWindowsPage.clickClickHere();
+    }
 
-    
-        Set<String> handles = AqualityServices.getBrowser().getDriver().getWindowHandles();
-        for (String h : handles) {
-            if (!h.equals(original)) {
-                AqualityServices.getBrowser().getDriver().switchTo().window(h);
+    @When("I switch to the newly opened tab")
+    public void switchToNewTab() {
+        String original = ScenarioContext.getOriginalWindow();
+
+        Set<String> handles = AqualityServices.getBrowser()
+                .getDriver()
+                .getWindowHandles();
+
+        for (String handle : handles) {
+            if (!handle.equals(original)) {
+                AqualityServices.getBrowser()
+                        .getDriver()
+                        .switchTo()
+                        .window(handle);
                 return;
             }
         }
 
-        Assert.fail("New tab was not opened (no new window handle found)");
+        throw new IllegalStateException("New tab was not opened");
     }
+
+
 
     @Then("the header of the opened tab should be {string}")
     public void headerShouldBe(String expected) {
@@ -55,15 +70,14 @@ public class MultipleWindowsSteps {
         String original = ScenarioContext.getOriginalWindow();
         Assert.assertNotNull(original, "Original window handle is null. It was not saved before opening new tab.");
 
-
         AqualityServices.getBrowser().getDriver().switchTo().window(original);
-
 
         AqualityServices.getBrowser().goBack();
     }
 
     @Then("the main page should be displayed")
     public void mainPageShouldBeDisplayed() {
-        Assert.assertTrue(mainPage.isDisplayed(), "Main page is not displayed");
+        Assert.assertTrue(mainPage.state().isDisplayed(), "Main page is not displayed");
+
     }
 }

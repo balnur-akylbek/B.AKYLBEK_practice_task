@@ -25,8 +25,4 @@ public class MainPage extends Form {
         multipleWindowsLink.getJsActions().scrollToTheCenter();
         multipleWindowsLink.click();
     }
-
-    public boolean isDisplayed() {
-        return state().isDisplayed();
-    }
 }
